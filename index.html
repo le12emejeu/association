@@ -416,7 +416,7 @@
         .event-modal {
             background: #ffffff;
             width: 100%;
-            max-width: 520px;
+            max-width: 540px;
             border-radius: 20px;
             box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
             overflow: hidden;
@@ -472,7 +472,7 @@
         .event-modal-body {
             padding: 20px;
             color: var(--dark);
-            font-size: 1rem;
+            font-size: 0.98rem;
             line-height: 1.55;
             max-height: 70vh;
             overflow-y: auto;
@@ -490,15 +490,44 @@
             margin-top: 6px;
         }
 
+        /* Rendu propre du HTML issu de Google Agenda */
         .event-modal-desc {
-            white-space: pre-wrap;
             word-break: break-word;
             color: #334155;
         }
 
+        .event-modal-desc p {
+            margin: 0 0 10px;
+        }
+
+        .event-modal-desc p:last-child {
+            margin-bottom: 0;
+        }
+
+        .event-modal-desc ul,
+        .event-modal-desc ol {
+            margin: 8px 0 12px;
+            padding-left: 20px;
+        }
+
+        .event-modal-desc li {
+            margin-bottom: 6px;
+        }
+
+        .event-modal-desc li > p {
+            margin: 0;
+        }
+
         .event-modal-desc a {
-            color: #0288d1;
+            color: #0d9488;
             font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px dashed #0d9488;
+        }
+
+        .event-modal-desc a:hover {
+            color: var(--red);
+            border-bottom-color: var(--red);
         }
 
         footer {
@@ -619,16 +648,33 @@
                 if (e.key === "Escape") fermerModale();
             });
 
-            function formaterDescription(texte) {
-                if (!texte) return "<em>Aucune description supplémentaire pour cet événement.</em>";
-                const echap = texte
-                    .replace(/&/g, "&amp;")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;");
-                return echap.replace(
-                    /(https?:\/\/[^\s<]+)/g,
-                    '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
-                );
+            function nettoyerHtmlDescription(htmlBrut) {
+                if (!htmlBrut || !htmlBrut.trim()) {
+                    return "<em>Aucune description supplémentaire pour cet événement.</em>";
+                }
+
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlBrut, "text/html");
+
+                // Supprimer les balises potentiellement dangereuses
+                doc.querySelectorAll("script, style, iframe, object, embed, link, meta").forEach((el) => el.remove());
+
+                // Nettoyer les attributs dangereux et sécuriser les liens
+                doc.querySelectorAll("*").forEach((el) => {
+                    Array.from(el.attributes).forEach((attr) => {
+                        const nom = attr.name.toLowerCase();
+                        const val = attr.value.trim().toLowerCase();
+                        if (nom.startsWith("on") || (nom === "href" && val.startsWith("javascript:"))) {
+                            el.removeAttribute(attr.name);
+                        }
+                    });
+                    if (el.tagName === "A" && el.hasAttribute("href")) {
+                        el.setAttribute("target", "_blank");
+                        el.setAttribute("rel", "noopener noreferrer");
+                    }
+                });
+
+                return doc.body.innerHTML.trim() || "<em>Aucune description supplémentaire pour cet événement.</em>";
             }
 
             function ouvrirModaleEvenement(event) {
@@ -668,7 +714,7 @@
                 }
 
                 const desc = event.extendedProps && event.extendedProps.description;
-                modalDesc.innerHTML = formaterDescription(desc);
+                modalDesc.innerHTML = nettoyerHtmlDescription(desc);
 
                 modalBackdrop.classList.add("open");
             }
