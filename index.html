@@ -22,7 +22,6 @@
 
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            /* Fond avec dégradé doux et discret aux couleurs ludiques */
             background: linear-gradient(135deg, #e0f2fe 0%, #fef3c7 50%, #fce7f3 100%);
             background-attachment: fixed;
             color: var(--dark);
@@ -46,7 +45,6 @@
             border: 3px solid #ffffff;
         }
 
-        /* BANNIÈRE CENTRÉE & RESPONSIVE MOBILE */
         .banner-container {
             width: 100%;
             background: #eef8f7;
@@ -92,7 +90,6 @@
             border: 1px dashed #cbd5e1;
         }
 
-        /* STYLES DES LIENS TEXTUELS DANS LES CARTES */
         .spec-item a {
             color: #0d9488;
             font-weight: 600;
@@ -109,7 +106,6 @@
             border-radius: 4px;
         }
 
-        /* Grille compacte avec fonds teintés discrets */
         .specs-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -129,7 +125,6 @@
             transform: translateY(-2px);
         }
 
-        /* Nuances de fonds pastel discrets */
         .bg-mint {
             background-color: #e6f4ea;
             border-left: 5px solid #34a853;
@@ -159,7 +154,6 @@
             color: #1e293b;
         }
 
-        /* Barre de boutons colorés et arrondis */
         .links-bar {
             display: flex;
             flex-wrap: wrap;
@@ -189,7 +183,6 @@
         .btn-facebook { background: linear-gradient(135deg, #1877f2, #1565c0); }
         .btn-agenda { background: linear-gradient(135deg, #0288d1, #01579b); }
 
-        /* Bloc agenda sur fond neutre très doux */
         .calendar-box {
             background: #f8fafc;
             border-radius: 18px;
@@ -240,7 +233,6 @@
             text-align: left;
         }
 
-        /* Personnalisation FullCalendar assortie au thème */
         .fc {
             --fc-button-bg-color: #00897b;
             --fc-button-border-color: #00897b;
@@ -260,17 +252,14 @@
             text-transform: capitalize;
         }
 
-        /* Supprimer la pastille de couleur avant le texte en vue Mois */
         .fc .fc-daygrid-event-dot {
             display: none !important;
         }
 
-        /* En vue Mois : pour les événements avec heure, masquer le titre et afficher uniquement l'heure de début */
         .fc .fc-daygrid-event:not(.fc-event-allday) .fc-event-title {
             display: none !important;
         }
 
-        /* En vue Mois : pour les événements journée entière, afficher le titre */
         .fc .fc-daygrid-event.fc-event-allday .fc-event-title {
             display: inline !important;
             font-weight: 700;
@@ -286,7 +275,6 @@
             margin-right: 0;
         }
 
-        /* Événements : fond plein et lisible */
         .fc .fc-daygrid-event {
             background-color: #0288d1;
             border: 1px solid #01579b;
@@ -310,13 +298,11 @@
             color: #ffffff;
         }
 
-        /* En vue Planning (liste), garder le titre bien visible et lisible */
         .fc .fc-list-event-title {
             font-weight: 600;
             color: var(--dark);
         }
 
-        /* Mise en valeur très forte pour l'événement du 1er décembre à 19h00 */
         .fc .fc-daygrid-event.fc-event-highlight {
             background-color: #e53935 !important;
             border: 2px solid #991b1b !important;
@@ -342,7 +328,6 @@
             margin: 4px;
         }
 
-        /* Adaptation mobile : éviter le chevauchement de la barre d'outils et rendre la grille lisible */
         @media (max-width: 599px) {
             .content-padding {
                 padding: 15px;
@@ -362,7 +347,6 @@
                 justify-content: space-between;
             }
 
-            /* Le mois et l'année prennent toute la largeur en haut */
             .fc .fc-toolbar-chunk:nth-child(2) {
                 order: -1;
                 width: 100%;
@@ -396,7 +380,6 @@
             }
         }
 
-        /* Fenêtre modale pour afficher le détail d'un événement au clic */
         .event-modal-backdrop {
             display: none;
             position: fixed;
@@ -490,7 +473,6 @@
             margin-top: 6px;
         }
 
-        /* Rendu propre du HTML issu de Google Agenda */
         .event-modal-desc {
             word-break: break-word;
             color: #334155;
@@ -632,232 +614,4 @@
             const modalHeader = document.getElementById("event-modal-header");
             const modalTitle = document.getElementById("event-modal-title");
             const modalDatetime = document.getElementById("event-modal-datetime");
-            const modalLocation = document.getElementById("event-modal-location");
-            const modalDesc = document.getElementById("event-modal-desc");
-            const modalClose = document.getElementById("event-modal-close");
-
-            function fermerModale() {
-                modalBackdrop.classList.remove("open");
-            }
-
-            modalClose.addEventListener("click", fermerModale);
-            modalBackdrop.addEventListener("click", function (e) {
-                if (e.target === modalBackdrop) fermerModale();
-            });
-            document.addEventListener("keydown", function (e) {
-                if (e.key === "Escape") fermerModale();
-            });
-
-            function nettoyerHtmlDescription(htmlBrut) {
-                if (!htmlBrut || !htmlBrut.trim()) {
-                    return "<em>Aucune description supplémentaire pour cet événement.</em>";
-                }
-
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlBrut, "text/html");
-
-                // Supprimer les balises potentiellement dangereuses
-                doc.querySelectorAll("script, style, iframe, object, embed, link, meta").forEach((el) => el.remove());
-
-                // Nettoyer les attributs dangereux et sécuriser les liens
-                doc.querySelectorAll("*").forEach((el) => {
-                    Array.from(el.attributes).forEach((attr) => {
-                        const nom = attr.name.toLowerCase();
-                        const val = attr.value.trim().toLowerCase();
-                        if (nom.startsWith("on") || (nom === "href" && val.startsWith("javascript:"))) {
-                            el.removeAttribute(attr.name);
-                        }
-                    });
-                    if (el.tagName === "A" && el.hasAttribute("href")) {
-                        el.setAttribute("target", "_blank");
-                        el.setAttribute("rel", "noopener noreferrer");
-                    }
-                });
-
-                return doc.body.innerHTML.trim() || "<em>Aucune description supplémentaire pour cet événement.</em>";
-            }
-
-            function obtenirComposantesParis(dateObj) {
-                const parts = new Intl.DateTimeFormat("fr-FR", {
-                    timeZone: "Europe/Paris",
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                    hour12: false
-                }).formatToParts(dateObj);
-
-                const getNum = (type) => Number(parts.find((p) => p.type === type)?.value);
-                return {
-                    year: getNum("year"),
-                    month: getNum("month"),
-                    day: getNum("day"),
-                    hour: getNum("hour") % 24,
-                    minute: getNum("minute")
-                };
-            }
-
-            function formaterDateParisISO(dateObj) {
-                const { year, month, day } = obtenirComposantesParis(dateObj);
-                return `${String(year).padStart(4, "0")}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-            }
-
-            function estEvenementMisEnAvant(debut) {
-                if (!debut) return false;
-                const { month, day, hour } = obtenirComposantesParis(debut);
-                // 1er décembre à 19h00 (heure de Paris)
-                return month === 12 && day === 1 && hour === 19;
-            }
-
-            function ouvrirModaleEvenement(event) {
-                const start = event.start;
-                const isHighlight = estEvenementMisEnAvant(start);
-
-                modalHeader.classList.toggle("highlight", isHighlight);
-                modalTitle.textContent = event.title || "Soirée jeux";
-
-                if (start) {
-                    const dateStr = start.toLocaleDateString("fr-FR", {
-                        weekday: "long",
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                        timeZone: "Europe/Paris"
-                    });
-                    const dateCapitalized = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
-
-                    if (event.allDay) {
-                        modalDatetime.innerHTML = `📅 <strong>Date :</strong> ${dateCapitalized} (Journée)`;
-                    } else {
-                        const heureDebut = start.toLocaleTimeString("fr-FR", {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            timeZone: "Europe/Paris"
-                        });
-                        modalDatetime.innerHTML = `📅 <strong>Date :</strong> ${dateCapitalized}<br>⏰ <strong>Horaire :</strong> ${heureDebut}`;
-                    }
-                }
-
-                const lieu = event.extendedProps && event.extendedProps.location;
-                if (lieu) {
-                    modalLocation.style.display = "block";
-                    modalLocation.innerHTML = `📍 <strong>Lieu :</strong> ${lieu}`;
-                } else {
-                    modalLocation.style.display = "none";
-                }
-
-                const desc = event.extendedProps && event.extendedProps.description;
-                modalDesc.innerHTML = nettoyerHtmlDescription(desc);
-
-                modalBackdrop.classList.add("open");
-            }
-
-            const calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: "dayGridMonth",
-                locale: "fr",
-                firstDay: 1,
-                timeZone: "Europe/Paris",
-                height: "auto",
-                displayEventTime: true,
-                displayEventEnd: false,
-                eventDisplay: "block",
-                headerToolbar: {
-                    left: "prev,next today",
-                    center: "title",
-                    right: "dayGridMonth,listMonth"
-                },
-                eventTimeFormat: {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    meridiem: false
-                },
-                events: async function (fetchInfo, successCallback, failureCallback) {
-                    const sources = [icsUrlLocal, icsUrlProxy, icsUrlDirect];
-                    for (const src of sources) {
-                        try {
-                            const res = await fetch(src, { cache: "no-store" });
-                            if (!res.ok) continue;
-                            const icsText = await res.text();
-                            if (!icsText.includes("BEGIN:VCALENDAR")) continue;
-
-                            const jcalData = ICAL.parse(icsText);
-                            const comp = new ICAL.Component(jcalData);
-                            const vevents = comp.getAllSubcomponents("vevent");
-                            const parsedEvents = [];
-
-                            vevents.forEach((vevent) => {
-                                const event = new ICAL.Event(vevent);
-                                const summary = event.summary || "Soirée jeux";
-                                const location = event.location || "";
-                                const description = event.description || "";
-
-                                if (event.isRecurring()) {
-                                    const iter = event.iterator();
-                                    let next;
-                                    let guard = 0;
-                                    while ((next = iter.next()) && guard < 500) {
-                                        guard++;
-                                        const occurrenceStart = next.toJSDate();
-                                        if (occurrenceStart > fetchInfo.end) break;
-                                        const details = event.getOccurrenceDetails(next);
-                                        const occurrenceEnd = details.endDate ? details.endDate.toJSDate() : null;
-                                        if (!occurrenceEnd || occurrenceEnd >= fetchInfo.start) {
-                                            parsedEvents.push({
-                                                title: summary,
-                                                start: occurrenceStart,
-                                                end: occurrenceEnd,
-                                                allDay: event.startDate.isDate,
-                                                extendedProps: { location, description }
-                                            });
-                                        }
-                                    }
-                                } else {
-                                    const startDate = event.startDate ? event.startDate.toJSDate() : null;
-                                    const endDate = event.endDate ? event.endDate.toJSDate() : null;
-                                    if (startDate) {
-                                        parsedEvents.push({
-                                            title: summary,
-                                            start: startDate,
-                                            end: endDate,
-                                            allDay: event.startDate.isDate,
-                                            extendedProps: { location, description }
-                                        });
-                                    }
-                                }
-                            });
-
-                            successCallback(parsedEvents);
-                            return;
-                        } catch (err) {
-                            // Essaie la source suivante
-                        }
-                    }
-                    failureCallback(new Error("Impossible de charger le flux ICS"));
-                },
-                eventClick: function (info) {
-                    info.jsEvent.preventDefault();
-                    ouvrirModaleEvenement(info.event);
-                },
-                eventDidMount: function (info) {
-                    if (info.event.allDay) {
-                        info.el.classList.add("fc-event-allday");
-                    }
-
-                    if (estEvenementMisEnAvant(info.event.start)) {
-                        info.el.classList.add("fc-event-highlight");
-
-                        const isoDateParis = formaterDateParisISO(info.event.start);
-                        const cell = calendarEl.querySelector(`.fc-daygrid-day[data-date="${isoDateParis}"]`);
-                        if (cell) {
-                            cell.classList.add("fc-day-highlight");
-                        }
-                    }
-                }
-            });
-
-            calendar.render();
-        });
-    </script>
-</body>
-</html>
+            const modalLocation = document.getElementByI
