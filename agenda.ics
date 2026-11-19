@@ -1,0 +1,104 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Soirées jeux Le 12eme jeu
+X-WR-TIMEZONE:Europe/Paris
+X-WR-CALDESC:Soirées jeux de société à la Vieille Halle (Ambarès). Mardis i
+ mpaires + 1 vendredi/mois dès 19h. Amenez vos jeux ! Gratuit la 1ère fois\,
+  puis 5€/an. Tél : 0679105045. Plus d'infos sur notre site
+BEGIN:VTIMEZONE
+TZID:Europe/Paris
+X-LIC-LOCATION:Europe/Paris
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:GMT+2
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:GMT+1
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Paris:20261201T190000
+DTEND;TZID=Europe/Paris:20261201T220000
+RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20261214T225959Z;INTERVAL=2;BYDAY=TU
+DTSTAMP:20261119T101410Z
+UID:6th66phg6kpj4b9kclj6cb9kcpj6ab9p6cq68bb56th3ceb36lhm4d9ocg@google.com
+CREATED:20261105T055833Z
+DESCRIPTION:<p><b>Soirée Jeux de sociéte - Le 12ème Jeu</b><sup></sup>   </
+ p><p>Rejoignez-nous pour notre soirée jeux des <b>mardi semaines impaires</
+ b> dans une ambiance chaleureuse\, conviviale et ouverte à tous !</p><ul><l
+ i><p><b>Horaire :</b> À partir de <b>19h00</b><sup></sup>. <i>Conseil : il 
+ est préférable d'arriver à l'heure\, car il peut être plus délicat d'intégr
+ er des parties déjà bien entamées.</i>   </p></li><li><p><b>Lieu :</b> <a h
+ ref="https://maps.app.goo.gl/YstssZtc6VkKWP8aA" target="_blank">Vieille Hal
+ le\, 58 rue Edmond Faulat\, 33440 Ambarès-et-Lagrave</a> (à coté de l'églis
+ e).</p></li><li><p><b>Principe :</b> Chacun amène les jeux de société qu'il
+  a envie de sortir ou de faire découvrir. Vous pouvez consulter les ludothè
+ ques des adhérents sur <a href="https://www.myludo.fr/#!/profil/claude-6980
+ 7/friends" target="_blank">MyLudo</a>.</p></li><li><p><b>Participation :</b
+ > Gratuit pour votre première séance de découverte ! Ensuite Adhésion annue
+ lle de 5 € pour les + de 8 ans (valable un an de date à date)\, possible su
+ r <a href="https://www.helloasso.com/associations/le-douzieme-jeu" target="
+ _blank">HelloAsso</a>.</p></li><li><p><b>Règles d'âge :</b> Déconseillé aux
+  moins de 9 ans en raison de l'heure tardive. Moins de 12 ans obligatoireme
+ nt accompagnés.</p></li><li><p><b>Besoin d'infos ?</b> Contactez-nous au <b
+ >06 79 10 50 45</b> ou visitez <a href="https://www.facebook.com/p/Le-12e-j
+ eu-61589676959777/" target="_blank">notre page Facebook</a>.</p></li></ul><
+ p><i>Pensez à vérifier l'agenda en ligne pour confirmer les horaires et les
+  dates : <a href="https://calendar.google.com/calendar/u/0?cid=bGUxMmVtZWpl
+ dUBnbWFpbC5jb20" target="_blank">Agenda Le 12e Jeu</a>.</i></p>
+LAST-MODIFIED:20261105T082212Z
+LOCATION:58 Rue Edmond Faulat\, 33440 Ambarès-et-Lagrave\, France
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Soirée jeu de société à partir de 19h00 avec le 12eme jeu
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Paris:20261215T190000
+DTEND;TZID=Europe/Paris:20261215T220000
+RRULE:FREQ=WEEKLY;WKST=SU;COUNT=1;INTERVAL=2;BYDAY=TU
+DTSTAMP:20261119T101410Z
+UID:6th66phg6kpj4b9kclj6cb9kcpj6ab9p6cq68bb56th3ceb36lhm4d9ocg_R20261215T18
+ 0000@google.com
+CREATED:20261105T055833Z
+DESCRIPTION:<p><b>Soirée Jeux de sociéte - Le 12ème Jeu</b><sup></sup>   </
+ p><p>Rejoignez-nous pour notre soirée jeux des <b>mardi semaines impaires</
+ b> dans une ambiance chaleureuse\, conviviale et ouverte à tous !</p><ul><l
+ i><p><b>Horaire :</b> À partir de <b>19h00</b><sup></sup>. <i>Conseil : il 
+ est préférable d'arriver à l'heure\, car il peut être plus délicat d'intégr
+ er des parties déjà bien entamées.</i>   </p></li><li><p><b>Lieu :</b> <a h
+ ref="https://maps.app.goo.gl/YstssZtc6VkKWP8aA" target="_blank">Vieille Hal
+ le\, 58 rue Edmond Faulat\, 33440 Ambarès-et-Lagrave</a> (à coté de l'églis
+ e).</p></li><li><p><b>Principe :</b> Chacun amène les jeux de société qu'il
+  a envie de sortir ou de faire découvrir. Vous pouvez consulter les ludothè
+ ques des adhérents sur <a href="https://www.myludo.fr/#!/profil/claude-6980
+ 7/friends" target="_blank">MyLudo</a>.</p></li><li><p><b>Participation :</b
+ > Gratuit pour votre première séance de découverte ! Ensuite Adhésion annue
+ lle de 5 € pour les + de 8 ans (valable un an de date à date)\, possible su
+ r <a href="https://www.helloasso.com/associations/le-douzieme-jeu" target="
+ _blank">HelloAsso</a>.</p></li><li><p><b>Règles d'âge :</b> Déconseillé aux
+  moins de 9 ans en raison de l'heure tardive. Moins de 12 ans obligatoireme
+ nt accompagnés.</p></li><li><p><b>Besoin d'infos ?</b> Contactez-nous au <b
+ >06 79 10 50 45</b> ou visitez <a href="https://www.facebook.com/p/Le-12e-j
+ eu-61589676959777/" target="_blank">notre page Facebook</a>.</p></li></ul><
+ p><i>Pensez à vérifier l'agenda en ligne pour confirmer les horaires et les
+  dates : <a href="https://calendar.google.com/calendar/u/0?cid=bGUxMmVtZWpl
+ dUBnbWFpbC5jb20" target="_blank">Agenda Le 12e Jeu</a>.</i></p>
+LAST-MODIFIED:20261105T082212Z
+LOCATION:58 Rue Edmond Faulat\, 33440 Ambarès-et-Lagrave\, France
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Soirée jeu de société à partir de 19h00 avec le 12eme jeu
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
