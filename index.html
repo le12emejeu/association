@@ -107,7 +107,6 @@
             border-bottom-color: var(--red);
             background-color: rgba(255, 255, 255, 0.6);
             border-radius: 4px;
-            /* padding: 2px 4px; */
         }
 
         /* Grille compacte avec fonds teintés discrets */
@@ -261,6 +260,32 @@
             text-transform: capitalize;
         }
 
+        /* Supprimer la pastille de couleur avant le texte en vue Mois */
+        .fc .fc-daygrid-event-dot {
+            display: none !important;
+        }
+
+        /* En vue Mois : pour les événements avec heure, masquer le titre et afficher uniquement l'heure de début */
+        .fc .fc-daygrid-event:not(.fc-event-allday) .fc-event-title {
+            display: none !important;
+        }
+
+        /* En vue Mois : pour les événements journée entière, afficher le titre */
+        .fc .fc-daygrid-event.fc-event-allday .fc-event-title {
+            display: inline !important;
+            font-weight: 700;
+            white-space: normal;
+        }
+
+        .fc .fc-daygrid-event .fc-event-main-frame {
+            justify-content: center;
+        }
+
+        .fc .fc-daygrid-event .fc-event-time {
+            font-weight: 700;
+            margin-right: 0;
+        }
+
         /* Événements : fond plein et lisible */
         .fc .fc-daygrid-event {
             background-color: #0288d1;
@@ -269,21 +294,39 @@
             padding: 3px 6px;
             border-radius: 6px;
             font-weight: 600;
-            white-space: normal;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.15s ease, filter 0.15s ease;
         }
 
-        .fc .fc-event-title,
-        .fc .fc-event-time {
+        .fc .fc-daygrid-event:hover,
+        .fc .fc-list-event:hover {
+            filter: brightness(1.06);
+            cursor: pointer;
+        }
+
+        .fc .fc-daygrid-event .fc-event-main,
+        .fc .fc-daygrid-event .fc-event-time {
             color: #ffffff;
         }
 
+        /* En vue Planning (liste), garder le titre bien visible et lisible */
+        .fc .fc-list-event-title {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
         /* Mise en valeur très forte pour l'événement du 1er décembre à 19h00 */
-        .fc .fc-daygrid-event.fc-event-highlight,
-        .fc .fc-list-event.fc-event-highlight {
+        .fc .fc-daygrid-event.fc-event-highlight {
             background-color: #e53935 !important;
             border: 2px solid #991b1b !important;
             color: #ffffff !important;
             box-shadow: 0 3px 10px rgba(229, 57, 53, 0.35);
+        }
+
+        .fc .fc-list-event.fc-event-highlight td {
+            background-color: #fef2f2 !important;
+            font-weight: 700;
         }
 
         .fc .fc-daygrid-day.fc-day-highlight {
@@ -299,189 +342,54 @@
             margin: 4px;
         }
 
-        footer {
-            text-align: center;
-            font-size: 0.85rem;
-            color: #475569;
-            margin-top: 5px;
-            font-weight: 500;
-        }
-
-        @media (min-width: 600px) {
-            .specs-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="main-card">
-        <div class="banner-container">
-            <img src="banniere.jpg" alt="Association Le 12ème Jeu" class="banner-img">
-        </div>
-
-        <div class="content-padding">
-            <h1>Soirées Jeux de Société - Le 12ème Jeu</h1>
-            <p class="intro-text">
-                Rejoignez-nous dans une ambiance chaleureuse, conviviale, sympathique et ouverte à tous !
-            </p>
-
-            <div class="specs-grid">
-                <div class="spec-item bg-coral">
-                    📅 <strong>Dates :</strong> Mardis des semaines impaires + 1er vendredi du mois (<a href="https://calendar.google.com/calendar/u/0?cid=bGUxMmVtZWpldUBnbWFpbC5jb20" class="" target="_blank">📅 Ajouter à mon agenda</a>)<br/>
-                    ⏰ <strong>Horaires :</strong> Dès 19h00 (Conseil : il est préférable d'arriver à l'heure, car il peut être plus délicat d'intégrer des parties déjà bien entamées.).
-                </div>
-                <div class="spec-item bg-mint">
-                    🎲 <strong>Jeux proposés :</strong> Pas de stock sur place, chacun amène les jeux qu'il a envie de sortir ou de partager !<br/><a href="https://www.myludo.fr/#!/profil/claude-69807/friends" class="" target="_blank">consulter les ludothèques perso des adhérents</a>.
-                </div>
-                <div class="spec-item bg-blue">
-                    📍 <strong>Lieu :</strong> <a href="https://maps.app.goo.gl/YstssZtc6VkKWP8aA" target="_blank">Vieille Halle, 58 rue Edmond Faulat, 33440 Ambarès-et-Lagrave</a> (à côté de l'église).
-                </div>
-                <div class="spec-item bg-amber">
-                    💶 <strong>Tarifs :</strong> Gratuit la 1ère séance ! Puis <a href="https://www.helloasso.com/associations/le-douzieme-jeu"  target="_blank">adhésion</a> 5€/an (+ de 8 ans, valable un an de date à date).<br/> L'adhésion permet d'avoir 10% de réduction dans plusieurs boutiques de jeu partenaires.
-                </div>
-                <div class="spec-item bg-purple">
-                    👶 <strong>Age :</strong> Déconseillé aux - de 9 ans du fait de l'heure tardive. Moins de 12 ans obligatoirement accompagnés.
-                </div>
-                <div class="spec-item bg-rose">
-                    📞 <strong>Contact & Infos :</strong> 06 79 10 50 45 ou via notre <a href="https://www.facebook.com/p/Le-12e-jeu-61589676959777/" class="" target="_blank">Page Facebook</a>.
-                </div>
-            </div>
-            <div class="links-bar">
-                <a href="https://www.helloasso.com/associations/le-douzieme-jeu" class="btn btn-helloasso" target="_blank">🎟️ Adhérer sur HelloAsso</a>
-                <a href="https://www.facebook.com/p/Le-12e-jeu-61589676959777/" class="btn btn-facebook" target="_blank">👥 Page Facebook</a>
-            </div>
-
-            <div class="calendar-box">
-                <div class="calendar-header">
-                    <h2>🗓️ Agenda en Ligne</h2>
-                    <div class="calendar-actions">
-                        <a href="https://calendar.google.com/calendar/u/0?cid=bGUxMmVtZWpldUBnbWFpbC5jb20" class="btn btn-agenda" target="_blank" rel="noopener noreferrer">📅 Ajouter à mon Agenda</a>
-                        <a href="https://calendar.google.com/calendar/ical/le12emejeu%40gmail.com/public/basic.ics" class="btn btn-agenda" target="_blank" rel="noopener noreferrer">📅 Ajouter à mon agenda (ICS)</a>
-                    </div>
-                </div>
-                <p style="font-size: 0.9rem; margin-top: 0; color: #64748b;">Pensez à vérifier l'agenda pour confirmer les dates et horaires !</p>
-                <div class="calendar-wrapper">
-                    <div id="fullcalendar-agenda"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2026 Association Le 12ème Jeu - Ambarès-et-Lagrave</p>
-    </footer>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const calendarEl = document.getElementById("fullcalendar-agenda");
-            const icsUrlDirect = "https://calendar.google.com/calendar/ical/le12emejeu%40gmail.com/public/basic.ics";
-            const icsUrlLocal = "./agenda.ics";
-            const icsUrlProxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(icsUrlDirect);
-
-            function estEvenementMisEnAvant(debut) {
-                if (!debut) return false;
-                // 1er décembre à 19h00 (mois 11 en JavaScript)
-                return debut.getMonth() === 11 && debut.getDate() === 1 && debut.getHours() === 19;
+        /* Adaptation mobile : éviter le chevauchement de la barre d'outils et rendre la grille lisible */
+        @media (max-width: 599px) {
+            .content-padding {
+                padding: 15px;
             }
 
-            const calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: window.innerWidth < 600 ? "listMonth" : "dayGridMonth",
-                locale: "fr",
-                firstDay: 1,
-                timeZone: "Europe/Paris",
-                height: "auto",
-                headerToolbar: {
-                    left: "prev,next today",
-                    center: "title",
-                    right: "dayGridMonth,listMonth"
-                },
-                eventTimeFormat: {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    meridiem: false
-                },
-                events: async function (fetchInfo, successCallback, failureCallback) {
-                    const sources = [icsUrlLocal, icsUrlProxy, icsUrlDirect];
-                    for (const src of sources) {
-                        try {
-                            const res = await fetch(src, { cache: "no-store" });
-                            if (!res.ok) continue;
-                            const icsText = await res.text();
-                            if (!icsText.includes("BEGIN:VCALENDAR")) continue;
+            .calendar-box {
+                padding: 10px;
+            }
 
-                            const jcalData = ICAL.parse(icsText);
-                            const comp = new ICAL.Component(jcalData);
-                            const vevents = comp.getAllSubcomponents("vevent");
-                            const parsedEvents = [];
+            .calendar-wrapper {
+                padding: 8px;
+            }
 
-                            vevents.forEach((vevent) => {
-                                const event = new ICAL.Event(vevent);
-                                const summary = event.summary || "Soirée jeux";
-                                const location = event.location || "";
+            .fc .fc-header-toolbar {
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: space-between;
+            }
 
-                                if (event.isRecurring()) {
-                                    const iter = event.iterator();
-                                    let next;
-                                    let guard = 0;
-                                    while ((next = iter.next()) && guard < 500) {
-                                        guard++;
-                                        const occurrenceStart = next.toJSDate();
-                                        if (occurrenceStart > fetchInfo.end) break;
-                                        const details = event.getOccurrenceDetails(next);
-                                        const occurrenceEnd = details.endDate ? details.endDate.toJSDate() : null;
-                                        if (!occurrenceEnd || occurrenceEnd >= fetchInfo.start) {
-                                            parsedEvents.push({
-                                                title: summary,
-                                                start: occurrenceStart,
-                                                end: occurrenceEnd,
-                                                allDay: event.startDate.isDate,
-                                                extendedProps: { location }
-                                            });
-                                        }
-                                    }
-                                } else {
-                                    const startDate = event.startDate ? event.startDate.toJSDate() : null;
-                                    const endDate = event.endDate ? event.endDate.toJSDate() : null;
-                                    if (startDate) {
-                                        parsedEvents.push({
-                                            title: summary,
-                                            start: startDate,
-                                            end: endDate,
-                                            allDay: event.startDate.isDate,
-                                            extendedProps: { location }
-                                        });
-                                    }
-                                }
-                            });
+            /* Le mois et l'année prennent toute la largeur en haut */
+            .fc .fc-toolbar-chunk:nth-child(2) {
+                order: -1;
+                width: 100%;
+                text-align: center;
+                margin-bottom: 2px;
+            }
 
-                            successCallback(parsedEvents);
-                            return;
-                        } catch (err) {
-                            // Essaie la source suivante
-                        }
-                    }
-                    failureCallback(new Error("Impossible de charger le flux ICS"));
-                },
-                eventDidMount: function (info) {
-                    if (estEvenementMisEnAvant(info.event.start)) {
-                        info.el.classList.add("fc-event-highlight");
+            .fc .fc-toolbar-title {
+                font-size: 1.05rem;
+            }
 
-                        const d = info.event.start;
-                        const yyyy = d.getFullYear();
-                        const mm = String(d.getMonth() + 1).padStart(2, "0");
-                        const dd = String(d.getDate()).padStart(2, "0");
-                        const cell = calendarEl.querySelector(`.fc-daygrid-day[data-date="${yyyy}-${mm}-${dd}"]`);
-                        if (cell) {
-                            cell.classList.add("fc-day-highlight");
-                        }
-                    }
-                }
-            });
+            .fc .fc-button {
+                padding: 5px 8px;
+                font-size: 0.78rem;
+            }
 
-            calendar.render();
-        });
-    </script>
-</body>
-</html>
+            .fc .fc-col-header-cell-cushion {
+                font-size: 0.75rem;
+                padding: 4px 2px;
+            }
+
+            .fc .fc-daygrid-day-number {
+                font-size: 0.75rem;
+                padding: 2px 4px;
+            }
+
+            .fc .fc-daygrid-event {
+                font-size: 0.72rem;
+                padding: 2px 3px;
+                line-height: 1.2
