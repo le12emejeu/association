@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le 12ème Jeu - Soirées jeux de société à Ambarès-et-Lagrave</title>
-    
+
+    <!-- FullCalendar + plugin iCalendar via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/ical.js@1.5.0/build/ical.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/icalendar@6.1.15/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/locales/fr.global.min.js"></script>
+
     <style>
         :root {
             --turq: #00897b;
@@ -183,6 +189,7 @@
         .btn-myludo { background: linear-gradient(135deg, #ff9800, #f57c00); }
         .btn-facebook { background: linear-gradient(135deg, #1877f2, #1565c0); }
         .btn-agenda { background: linear-gradient(135deg, #0288d1, #01579b); }
+
         /* Bloc agenda sur fond neutre très doux */
         .calendar-box {
             background: #f8fafc;
@@ -191,7 +198,6 @@
             border: 2px solid #e2e8f0;
             text-align: center;
         }
-
 
         .calendar-box h2 {
             margin: 0;
@@ -229,13 +235,68 @@
             overflow: hidden;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: #ffffff;
+            padding: 12px;
+            box-sizing: border-box;
+            text-align: left;
         }
 
-        .calendar-wrapper iframe {
-            width: 100%;
-            height: 450px;
-            border: none;
-            background: white;
+        /* Personnalisation FullCalendar assortie au thème */
+        .fc {
+            --fc-button-bg-color: #00897b;
+            --fc-button-border-color: #00897b;
+            --fc-button-hover-bg-color: #00695c;
+            --fc-button-hover-border-color: #00695c;
+            --fc-button-active-bg-color: #004d40;
+            --fc-button-active-border-color: #004d40;
+            --fc-today-bg-color: #e0f2f1;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .fc .fc-toolbar-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--dark);
+            text-transform: capitalize;
+        }
+
+        /* Événements : fond plein et lisible */
+        .fc .fc-daygrid-event {
+            background-color: #0288d1;
+            border: 1px solid #01579b;
+            color: #ffffff;
+            padding: 3px 6px;
+            border-radius: 6px;
+            font-weight: 600;
+            white-space: normal;
+        }
+
+        .fc .fc-event-title,
+        .fc .fc-event-time {
+            color: #ffffff;
+        }
+
+        /* Mise en valeur très forte pour l'événement du 1er décembre à 19h00 */
+        .fc .fc-daygrid-event.fc-event-highlight,
+        .fc .fc-list-event.fc-event-highlight {
+            background-color: #e53935 !important;
+            border: 2px solid #991b1b !important;
+            color: #ffffff !important;
+            box-shadow: 0 3px 10px rgba(229, 57, 53, 0.35);
+        }
+
+        .fc .fc-daygrid-day.fc-day-highlight {
+            background-color: #fef2f2 !important;
+        }
+
+        .fc .fc-daygrid-day.fc-day-highlight .fc-daygrid-day-number {
+            background-color: #e53935;
+            color: #ffffff;
+            border-radius: 999px;
+            padding: 2px 7px;
+            font-weight: 700;
+            margin: 4px;
         }
 
         footer {
@@ -302,7 +363,7 @@
                 </div>
                 <p style="font-size: 0.9rem; margin-top: 0; color: #64748b;">Pensez à vérifier l'agenda pour confirmer les dates et horaires !</p>
                 <div class="calendar-wrapper">
-                    <iframe src="https://calendar.google.com/calendar/embed?height=450&wkst=2&ctz=Europe%2FParis&showPrint=0&showTz=0&showTitle=0&hl=fr&src=bGUxMmVtZWpldUBnbWFpbC5jb20&color=%23ad1457" scrolling="no"></iframe>
+                    <div id="fullcalendar-agenda"></div>
                 </div>
             </div>
         </div>
@@ -312,5 +373,115 @@
         <p>&copy; 2026 Association Le 12ème Jeu - Ambarès-et-Lagrave</p>
     </footer>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const calendarEl = document.getElementById("fullcalendar-agenda");
+            const icsUrlDirect = "https://calendar.google.com/calendar/ical/le12emejeu%40gmail.com/public/basic.ics";
+            const icsUrlLocal = "./agenda.ics";
+            const icsUrlProxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(icsUrlDirect);
+
+            function estEvenementMisEnAvant(debut) {
+                if (!debut) return false;
+                // 1er décembre à 19h00 (mois 11 en JavaScript)
+                return debut.getMonth() === 11 && debut.getDate() === 1 && debut.getHours() === 19;
+            }
+
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: window.innerWidth < 600 ? "listMonth" : "dayGridMonth",
+                locale: "fr",
+                firstDay: 1,
+                timeZone: "Europe/Paris",
+                height: "auto",
+                headerToolbar: {
+                    left: "prev,next today",
+                    center: "title",
+                    right: "dayGridMonth,listMonth"
+                },
+                eventTimeFormat: {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    meridiem: false
+                },
+                events: async function (fetchInfo, successCallback, failureCallback) {
+                    const sources = [icsUrlLocal, icsUrlProxy, icsUrlDirect];
+                    for (const src of sources) {
+                        try {
+                            const res = await fetch(src, { cache: "no-store" });
+                            if (!res.ok) continue;
+                            const icsText = await res.text();
+                            if (!icsText.includes("BEGIN:VCALENDAR")) continue;
+
+                            const jcalData = ICAL.parse(icsText);
+                            const comp = new ICAL.Component(jcalData);
+                            const vevents = comp.getAllSubcomponents("vevent");
+                            const parsedEvents = [];
+
+                            vevents.forEach((vevent) => {
+                                const event = new ICAL.Event(vevent);
+                                const summary = event.summary || "Soirée jeux";
+                                const location = event.location || "";
+
+                                if (event.isRecurring()) {
+                                    const iter = event.iterator();
+                                    let next;
+                                    let guard = 0;
+                                    while ((next = iter.next()) && guard < 500) {
+                                        guard++;
+                                        const occurrenceStart = next.toJSDate();
+                                        if (occurrenceStart > fetchInfo.end) break;
+                                        const details = event.getOccurrenceDetails(next);
+                                        const occurrenceEnd = details.endDate ? details.endDate.toJSDate() : null;
+                                        if (!occurrenceEnd || occurrenceEnd >= fetchInfo.start) {
+                                            parsedEvents.push({
+                                                title: summary,
+                                                start: occurrenceStart,
+                                                end: occurrenceEnd,
+                                                allDay: event.startDate.isDate,
+                                                extendedProps: { location }
+                                            });
+                                        }
+                                    }
+                                } else {
+                                    const startDate = event.startDate ? event.startDate.toJSDate() : null;
+                                    const endDate = event.endDate ? event.endDate.toJSDate() : null;
+                                    if (startDate) {
+                                        parsedEvents.push({
+                                            title: summary,
+                                            start: startDate,
+                                            end: endDate,
+                                            allDay: event.startDate.isDate,
+                                            extendedProps: { location }
+                                        });
+                                    }
+                                }
+                            });
+
+                            successCallback(parsedEvents);
+                            return;
+                        } catch (err) {
+                            // Essaie la source suivante
+                        }
+                    }
+                    failureCallback(new Error("Impossible de charger le flux ICS"));
+                },
+                eventDidMount: function (info) {
+                    if (estEvenementMisEnAvant(info.event.start)) {
+                        info.el.classList.add("fc-event-highlight");
+
+                        const d = info.event.start;
+                        const yyyy = d.getFullYear();
+                        const mm = String(d.getMonth() + 1).padStart(2, "0");
+                        const dd = String(d.getDate()).padStart(2, "0");
+                        const cell = calendarEl.querySelector(`.fc-daygrid-day[data-date="${yyyy}-${mm}-${dd}"]`);
+                        if (cell) {
+                            cell.classList.add("fc-day-highlight");
+                        }
+                    }
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
 </body>
 </html>
