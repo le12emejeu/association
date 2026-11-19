@@ -679,7 +679,6 @@
 
             function ouvrirModaleEvenement(event) {
                 const start = event.start;
-                const end = event.end;
                 const isHighlight = estEvenementMisEnAvant(start);
 
                 modalHeader.classList.toggle("highlight", isHighlight);
@@ -698,10 +697,7 @@
                         modalDatetime.innerHTML = `📅 <strong>Date :</strong> ${dateCapitalized} (Journée)`;
                     } else {
                         const heureDebut = start.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
-                        const heureFin = end
-                            ? " - " + end.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })
-                            : "";
-                        modalDatetime.innerHTML = `📅 <strong>Date :</strong> ${dateCapitalized}<br>⏰ <strong>Horaire :</strong> ${heureDebut}${heureFin}`;
+                        modalDatetime.innerHTML = `📅 <strong>Date :</strong> ${dateCapitalized}<br>⏰ <strong>Horaire :</strong> ${heureDebut}`;
                     }
                 }
 
