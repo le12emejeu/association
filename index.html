@@ -677,6 +677,39 @@
                 return doc.body.innerHTML.trim() || "<em>Aucune description supplémentaire pour cet événement.</em>";
             }
 
+            function obtenirComposantesParis(dateObj) {
+                const parts = new Intl.DateTimeFormat("fr-FR", {
+                    timeZone: "Europe/Paris",
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: false
+                }).formatToParts(dateObj);
+
+                const getNum = (type) => Number(parts.find((p) => p.type === type)?.value);
+                return {
+                    year: getNum("year"),
+                    month: getNum("month"),
+                    day: getNum("day"),
+                    hour: getNum("hour") % 24,
+                    minute: getNum("minute")
+                };
+            }
+
+            function formaterDateParisISO(dateObj) {
+                const { year, month, day } = obtenirComposantesParis(dateObj);
+                return `${String(year).padStart(4, "0")}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+            }
+
+            function estEvenementMisEnAvant(debut) {
+                if (!debut) return false;
+                const { month, day, hour } = obtenirComposantesParis(debut);
+                // 1er décembre à 19h00 (heure de Paris)
+                return month === 12 && day === 1 && hour === 19;
+            }
+
             function ouvrirModaleEvenement(event) {
                 const start = event.start;
                 const isHighlight = estEvenementMisEnAvant(start);
@@ -689,14 +722,19 @@
                         weekday: "long",
                         day: "numeric",
                         month: "long",
-                        year: "numeric"
+                        year: "numeric",
+                        timeZone: "Europe/Paris"
                     });
                     const dateCapitalized = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
 
                     if (event.allDay) {
                         modalDatetime.innerHTML = `📅 <strong>Date :</strong> ${dateCapitalized} (Journée)`;
                     } else {
-                        const heureDebut = start.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+                        const heureDebut = start.toLocaleTimeString("fr-FR", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            timeZone: "Europe/Paris"
+                        });
                         modalDatetime.innerHTML = `📅 <strong>Date :</strong> ${dateCapitalized}<br>⏰ <strong>Horaire :</strong> ${heureDebut}`;
                     }
                 }
@@ -713,12 +751,6 @@
                 modalDesc.innerHTML = nettoyerHtmlDescription(desc);
 
                 modalBackdrop.classList.add("open");
-            }
-
-            function estEvenementMisEnAvant(debut) {
-                if (!debut) return false;
-                // 1er décembre à 19h00 (mois 11 en JavaScript)
-                return debut.getMonth() === 11 && debut.getDate() === 1 && debut.getHours() === 19;
             }
 
             const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -815,11 +847,8 @@
                     if (estEvenementMisEnAvant(info.event.start)) {
                         info.el.classList.add("fc-event-highlight");
 
-                        const d = info.event.start;
-                        const yyyy = d.getFullYear();
-                        const mm = String(d.getMonth() + 1).padStart(2, "0");
-                        const dd = String(d.getDate()).padStart(2, "0");
-                        const cell = calendarEl.querySelector(`.fc-daygrid-day[data-date="${yyyy}-${mm}-${dd}"]`);
+                        const isoDateParis = formaterDateParisISO(info.event.start);
+                        const cell = calendarEl.querySelector(`.fc-daygrid-day[data-date="${isoDateParis}"]`);
                         if (cell) {
                             cell.classList.add("fc-day-highlight");
                         }
