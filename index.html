@@ -392,4 +392,401 @@
             .fc .fc-daygrid-event {
                 font-size: 0.72rem;
                 padding: 2px 3px;
-                line-height: 1.2
+                line-height: 1.2;
+            }
+        }
+
+        /* Fenêtre modale pour afficher le détail d'un événement au clic */
+        .event-modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(3px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .event-modal-backdrop.open {
+            display: flex;
+        }
+
+        .event-modal {
+            background: #ffffff;
+            width: 100%;
+            max-width: 520px;
+            border-radius: 20px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            border: 2px solid #e2e8f0;
+            animation: modalFadeIn 0.18s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(10px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .event-modal-header {
+            background: linear-gradient(135deg, #00897b, #0288d1);
+            color: #ffffff;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .event-modal-header.highlight {
+            background: linear-gradient(135deg, #e53935, #c62828);
+        }
+
+        .event-modal-title {
+            margin: 0;
+            font-size: 1.25rem;
+            line-height: 1.3;
+        }
+
+        .event-modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #ffffff;
+            font-size: 1.3rem;
+            line-height: 1;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .event-modal-close:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        .event-modal-body {
+            padding: 20px;
+            color: var(--dark);
+            font-size: 1rem;
+            line-height: 1.55;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .event-modal-meta {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            font-size: 0.95rem;
+        }
+
+        .event-modal-meta div + div {
+            margin-top: 6px;
+        }
+
+        .event-modal-desc {
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: #334155;
+        }
+
+        .event-modal-desc a {
+            color: #0288d1;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #475569;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        @media (min-width: 600px) {
+            .specs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-card">
+        <div class="banner-container">
+            <img src="banniere.jpg" alt="Association Le 12ème Jeu" class="banner-img">
+        </div>
+
+        <div class="content-padding">
+            <h1>Soirées Jeux de Société - Le 12ème Jeu</h1>
+            <p class="intro-text">
+                Rejoignez-nous dans une ambiance chaleureuse, conviviale, sympathique et ouverte à tous !
+            </p>
+
+            <div class="specs-grid">
+                <div class="spec-item bg-coral">
+                    📅 <strong>Dates :</strong> Mardis des semaines impaires + 1er vendredi du mois (<a href="https://calendar.google.com/calendar/u/0?cid=bGUxMmVtZWpldUBnbWFpbC5jb20" class="" target="_blank">📅 Ajouter à mon agenda</a>)<br/>
+                    ⏰ <strong>Horaires :</strong> Dès 19h00 (Conseil : il est préférable d'arriver à l'heure, car il peut être plus délicat d'intégrer des parties déjà bien entamées.).
+                </div>
+                <div class="spec-item bg-mint">
+                    🎲 <strong>Jeux proposés :</strong> Pas de stock sur place, chacun amène les jeux qu'il a envie de sortir ou de partager !<br/><a href="https://www.myludo.fr/#!/profil/claude-69807/friends" class="" target="_blank">consulter les ludothèques perso des adhérents</a>.
+                </div>
+                <div class="spec-item bg-blue">
+                    📍 <strong>Lieu :</strong> <a href="https://maps.app.goo.gl/YstssZtc6VkKWP8aA" target="_blank">Vieille Halle, 58 rue Edmond Faulat, 33440 Ambarès-et-Lagrave</a> (à côté de l'église).
+                </div>
+                <div class="spec-item bg-amber">
+                    💶 <strong>Tarifs :</strong> Gratuit la 1ère séance ! Puis <a href="https://www.helloasso.com/associations/le-douzieme-jeu"  target="_blank">adhésion</a> 5€/an (+ de 8 ans, valable un an de date à date).<br/> L'adhésion permet d'avoir 10% de réduction dans plusieurs boutiques de jeu partenaires.
+                </div>
+                <div class="spec-item bg-purple">
+                    👶 <strong>Age :</strong> Déconseillé aux - de 9 ans du fait de l'heure tardive. Moins de 12 ans obligatoirement accompagnés.
+                </div>
+                <div class="spec-item bg-rose">
+                    📞 <strong>Contact & Infos :</strong> 06 79 10 50 45 ou via notre <a href="https://www.facebook.com/p/Le-12e-jeu-61589676959777/" class="" target="_blank">Page Facebook</a>.
+                </div>
+            </div>
+            <div class="links-bar">
+                <a href="https://www.helloasso.com/associations/le-douzieme-jeu" class="btn btn-helloasso" target="_blank">🎟️ Adhérer sur HelloAsso</a>
+                <a href="https://www.facebook.com/p/Le-12e-jeu-61589676959777/" class="btn btn-facebook" target="_blank">👥 Page Facebook</a>
+            </div>
+
+            <div class="calendar-box">
+                <div class="calendar-header">
+                    <h2>🗓️ Agenda en Ligne</h2>
+                    <div class="calendar-actions">
+                        <a href="https://calendar.google.com/calendar/u/0?cid=bGUxMmVtZWpldUBnbWFpbC5jb20" class="btn btn-agenda" target="_blank" rel="noopener noreferrer">📅 Ajouter à mon Agenda</a>
+                        <a href="https://calendar.google.com/calendar/ical/le12emejeu%40gmail.com/public/basic.ics" class="btn btn-agenda" target="_blank" rel="noopener noreferrer">📅 Ajouter à mon agenda (ICS)</a>
+                    </div>
+                </div>
+                <p style="font-size: 0.9rem; margin-top: 0; color: #64748b;">Pensez à vérifier l'agenda pour confirmer les dates et horaires ! Cliquez sur une date pour voir les détails.</p>
+                <div class="calendar-wrapper">
+                    <div id="fullcalendar-agenda"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fenêtre modale détail d'événement -->
+    <div id="event-modal-backdrop" class="event-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="event-modal-title">
+        <div class="event-modal">
+            <div id="event-modal-header" class="event-modal-header">
+                <h3 id="event-modal-title" class="event-modal-title"></h3>
+                <button id="event-modal-close" class="event-modal-close" aria-label="Fermer">&times;</button>
+            </div>
+            <div class="event-modal-body">
+                <div class="event-modal-meta">
+                    <div id="event-modal-datetime"></div>
+                    <div id="event-modal-location" style="display: none;"></div>
+                </div>
+                <div id="event-modal-desc" class="event-modal-desc"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Association Le 12ème Jeu - Ambarès-et-Lagrave</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const calendarEl = document.getElementById("fullcalendar-agenda");
+            const icsUrlDirect = "https://calendar.google.com/calendar/ical/le12emejeu%40gmail.com/public/basic.ics";
+            const icsUrlLocal = "./agenda.ics";
+            const icsUrlProxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(icsUrlDirect);
+
+            const modalBackdrop = document.getElementById("event-modal-backdrop");
+            const modalHeader = document.getElementById("event-modal-header");
+            const modalTitle = document.getElementById("event-modal-title");
+            const modalDatetime = document.getElementById("event-modal-datetime");
+            const modalLocation = document.getElementById("event-modal-location");
+            const modalDesc = document.getElementById("event-modal-desc");
+            const modalClose = document.getElementById("event-modal-close");
+
+            function fermerModale() {
+                modalBackdrop.classList.remove("open");
+            }
+
+            modalClose.addEventListener("click", fermerModale);
+            modalBackdrop.addEventListener("click", function (e) {
+                if (e.target === modalBackdrop) fermerModale();
+            });
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "Escape") fermerModale();
+            });
+
+            function formaterDescription(texte) {
+                if (!texte) return "<em>Aucune description supplémentaire pour cet événement.</em>";
+                const echap = texte
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;");
+                return echap.replace(
+                    /(https?:\/\/[^\s<]+)/g,
+                    '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+                );
+            }
+
+            function ouvrirModaleEvenement(event) {
+                const start = event.start;
+                const end = event.end;
+                const isHighlight = estEvenementMisEnAvant(start);
+
+                modalHeader.classList.toggle("highlight", isHighlight);
+                modalTitle.textContent = event.title || "Soirée jeux";
+
+                if (start) {
+                    const dateStr = start.toLocaleDateString("fr-FR", {
+                        weekday: "long",
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric"
+                    });
+                    const dateCapitalized = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+
+                    if (event.allDay) {
+                        modalDatetime.innerHTML = `📅 <strong>Date :</strong> ${dateCapitalized} (Journée)`;
+                    } else {
+                        const heureDebut = start.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+                        const heureFin = end
+                            ? " - " + end.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })
+                            : "";
+                        modalDatetime.innerHTML = `📅 <strong>Date :</strong> ${dateCapitalized}<br>⏰ <strong>Horaire :</strong> ${heureDebut}${heureFin}`;
+                    }
+                }
+
+                const lieu = event.extendedProps && event.extendedProps.location;
+                if (lieu) {
+                    modalLocation.style.display = "block";
+                    modalLocation.innerHTML = `📍 <strong>Lieu :</strong> ${lieu}`;
+                } else {
+                    modalLocation.style.display = "none";
+                }
+
+                const desc = event.extendedProps && event.extendedProps.description;
+                modalDesc.innerHTML = formaterDescription(desc);
+
+                modalBackdrop.classList.add("open");
+            }
+
+            function estEvenementMisEnAvant(debut) {
+                if (!debut) return false;
+                // 1er décembre à 19h00 (mois 11 en JavaScript)
+                return debut.getMonth() === 11 && debut.getDate() === 1 && debut.getHours() === 19;
+            }
+
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: "dayGridMonth",
+                locale: "fr",
+                firstDay: 1,
+                timeZone: "Europe/Paris",
+                height: "auto",
+                displayEventTime: true,
+                displayEventEnd: false,
+                eventDisplay: "block",
+                headerToolbar: {
+                    left: "prev,next today",
+                    center: "title",
+                    right: "dayGridMonth,listMonth"
+                },
+                eventTimeFormat: {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    meridiem: false
+                },
+                events: async function (fetchInfo, successCallback, failureCallback) {
+                    const sources = [icsUrlLocal, icsUrlProxy, icsUrlDirect];
+                    for (const src of sources) {
+                        try {
+                            const res = await fetch(src, { cache: "no-store" });
+                            if (!res.ok) continue;
+                            const icsText = await res.text();
+                            if (!icsText.includes("BEGIN:VCALENDAR")) continue;
+
+                            const jcalData = ICAL.parse(icsText);
+                            const comp = new ICAL.Component(jcalData);
+                            const vevents = comp.getAllSubcomponents("vevent");
+                            const parsedEvents = [];
+
+                            vevents.forEach((vevent) => {
+                                const event = new ICAL.Event(vevent);
+                                const summary = event.summary || "Soirée jeux";
+                                const location = event.location || "";
+                                const description = event.description || "";
+
+                                if (event.isRecurring()) {
+                                    const iter = event.iterator();
+                                    let next;
+                                    let guard = 0;
+                                    while ((next = iter.next()) && guard < 500) {
+                                        guard++;
+                                        const occurrenceStart = next.toJSDate();
+                                        if (occurrenceStart > fetchInfo.end) break;
+                                        const details = event.getOccurrenceDetails(next);
+                                        const occurrenceEnd = details.endDate ? details.endDate.toJSDate() : null;
+                                        if (!occurrenceEnd || occurrenceEnd >= fetchInfo.start) {
+                                            parsedEvents.push({
+                                                title: summary,
+                                                start: occurrenceStart,
+                                                end: occurrenceEnd,
+                                                allDay: event.startDate.isDate,
+                                                extendedProps: { location, description }
+                                            });
+                                        }
+                                    }
+                                } else {
+                                    const startDate = event.startDate ? event.startDate.toJSDate() : null;
+                                    const endDate = event.endDate ? event.endDate.toJSDate() : null;
+                                    if (startDate) {
+                                        parsedEvents.push({
+                                            title: summary,
+                                            start: startDate,
+                                            end: endDate,
+                                            allDay: event.startDate.isDate,
+                                            extendedProps: { location, description }
+                                        });
+                                    }
+                                }
+                            });
+
+                            successCallback(parsedEvents);
+                            return;
+                        } catch (err) {
+                            // Essaie la source suivante
+                        }
+                    }
+                    failureCallback(new Error("Impossible de charger le flux ICS"));
+                },
+                eventClick: function (info) {
+                    info.jsEvent.preventDefault();
+                    ouvrirModaleEvenement(info.event);
+                },
+                eventDidMount: function (info) {
+                    if (info.event.allDay) {
+                        info.el.classList.add("fc-event-allday");
+                    }
+
+                    if (estEvenementMisEnAvant(info.event.start)) {
+                        info.el.classList.add("fc-event-highlight");
+
+                        const d = info.event.start;
+                        const yyyy = d.getFullYear();
+                        const mm = String(d.getMonth() + 1).padStart(2, "0");
+                        const dd = String(d.getDate()).padStart(2, "0");
+                        const cell = calendarEl.querySelector(`.fc-daygrid-day[data-date="${yyyy}-${mm}-${dd}"]`);
+                        if (cell) {
+                            cell.classList.add("fc-day-highlight");
+                        }
+                    }
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
+</body>
+</html>
