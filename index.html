@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le 12ème Jeu - Soirées jeux de société à Ambarès-et-Lagrave</title>
 
-    <!-- FullCalendar + plugin iCalendar via CDN -->
+    <!-- FullCalendar + ical.js via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/ical.js@1.5.0/build/ical.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/icalendar@6.1.15/index.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/locales/fr.global.min.js"></script>
 
     <style>
@@ -231,6 +231,7 @@
             padding: 12px;
             box-sizing: border-box;
             text-align: left;
+            min-height: 260px;
         }
 
         .fc {
@@ -606,6 +607,8 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const calendarEl = document.getElementById("fullcalendar-agenda");
+            if (!calendarEl || typeof FullCalendar === "undefined") return;
+
             const icsUrlDirect = "https://calendar.google.com/calendar/ical/le12emejeu%40gmail.com/public/basic.ics";
             const icsUrlLocal = "./agenda.ics";
             const icsUrlProxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(icsUrlDirect);
@@ -614,4 +617,4 @@
             const modalHeader = document.getElementById("event-modal-header");
             const modalTitle = document.getElementById("event-modal-title");
             const modalDatetime = document.getElementById("event-modal-datetime");
-            const modalLocation = document.getElementByI
+            const modalLocation = document.getElementById("event-
