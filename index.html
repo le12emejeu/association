@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le 12ème Jeu - Soirées jeux de société à Ambarès-et-Lagrave</title>
+    <title>Le 12ème Jeu - Soirées et dimanches jeux de société à Ambarès-et-Lagrave</title>
 
     <!-- FullCalendar + ical.js via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/ical.js@1.5.0/build/ical.min.js"></script>
@@ -71,7 +71,7 @@
             color: var(--red);
             text-align: center;
             margin-top: 0;
-            font-size: 1.8rem;
+            font-size: 1.75rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             text-shadow: 1px 1px 0px rgba(0,0,0,0.05);
@@ -89,6 +89,60 @@
             border: 1px dashed #cbd5e1;
         }
 
+        .formats-comparison {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .format-card {
+            border-radius: 16px;
+            padding: 16px 18px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.03);
+        }
+
+        .format-evening {
+            background: linear-gradient(180deg, #fff5f5 0%, #ffffff 100%);
+            border: 2px solid #fecaca;
+            border-left: 6px solid var(--red);
+        }
+
+        .format-sunday {
+            background: linear-gradient(180deg, #fffbeb 0%, #ffffff 100%);
+            border: 2px solid #fde68a;
+            border-left: 6px solid var(--yellow);
+        }
+
+        .format-title {
+            margin: 0 0 10px;
+            font-size: 1.1rem;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .format-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-size: 0.94rem;
+            line-height: 1.5;
+        }
+
+        .format-list li + li {
+            margin-top: 7px;
+        }
+
+        .format-note {
+            font-size: 0.86rem;
+            color: #64748b;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .format-card a,
         .spec-item a {
             color: #0d9488;
             font-weight: 600;
@@ -98,6 +152,7 @@
             transition: all 0.2s ease;
         }
 
+        .format-card a:hover,
         .spec-item a:hover {
             color: var(--red);
             border-bottom-color: var(--red);
@@ -149,7 +204,8 @@
             border-left: 5px solid #e91e63;
         }
 
-        .spec-item strong {
+        .spec-item strong,
+        .format-card strong {
             color: #1e293b;
         }
 
@@ -220,6 +276,40 @@
             font-size: 0.8rem;
         }
 
+        .calendar-legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .legend-dot.evening {
+            background-color: #0288d1;
+            border: 1px solid #01579b;
+        }
+
+        .legend-dot.sunday {
+            background-color: #f57c00;
+            border: 1px solid #c2410c;
+        }
+
         .calendar-wrapper {
             position: relative;
             width: 100%;
@@ -285,6 +375,16 @@
             text-align: center;
             cursor: pointer;
             transition: transform 0.15s ease, filter 0.15s ease;
+        }
+
+        .fc .fc-daygrid-event.fc-event-sunday {
+            background-color: #f57c00;
+            border: 1px solid #c2410c;
+            color: #ffffff;
+        }
+
+        .fc .fc-list-event.fc-event-sunday .fc-list-event-dot {
+            border-color: #f57c00;
         }
 
         .fc .fc-daygrid-event:hover,
@@ -422,6 +522,10 @@
             gap: 12px;
         }
 
+        .event-modal-header.sunday {
+            background: linear-gradient(135deg, #f57c00, #ea580c);
+        }
+
         .event-modal-header.highlight {
             background: linear-gradient(135deg, #e53935, #c62828);
         }
@@ -521,6 +625,10 @@
         }
 
         @media (min-width: 600px) {
+            .formats-comparison {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
             .specs-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -535,35 +643,69 @@
         </div>
 
         <div class="content-padding">
-            <h1>Soirées Jeux de Société - Le 12ème Jeu</h1>
+            <h1>Soirées &amp; Dimanches Jeux - Le 12ème Jeu</h1>
             <p class="intro-text">
                 Rejoignez-nous dans une ambiance chaleureuse, conviviale, sympathique et ouverte à tous !
             </p>
 
+            <div class="formats-comparison">
+                <section class="format-card format-evening" aria-label="Soirées jeux du mardi et vendredi">
+                    <h2 class="format-title">🌙 Soirées jeux (Mardis &amp; Vendredis)</h2>
+                    <ul class="format-list">
+                        <li>
+                            📅 <strong>Dates :</strong> Mardis des semaines impaires + 1er vendredi du mois (<a href="https://calendar.google.com/calendar/u/0?cid=bGUxMmVtZWpldUBnbWFpbC5jb20" target="_blank" rel="noopener noreferrer">📅 Ajouter à mon agenda</a>)
+                        </li>
+                        <li>
+                            ⏰ <strong>Horaires :</strong> Dès 19h00
+                            <span class="format-note">Conseil : il est préférable d'arriver à l'heure, car il peut être plus délicat d'intégrer des parties déjà bien entamées.</span>
+                        </li>
+                        <li>
+                            📍 <strong>Lieu :</strong> <a href="https://maps.app.goo.gl/qfcKpgMzVD4qNe9i6" target="_blank" rel="noopener noreferrer">Vieille Halle, 58 rue Edmond Faulat, 33440 Ambarès-et-Lagrave</a> (à côté de l'église).
+                        </li>
+                        <li>
+                            💶 <strong>Tarifs :</strong> Gratuit la 1ère séance ! Puis <a href="https://www.helloasso.com/associations/le-douzieme-jeu" target="_blank" rel="noopener noreferrer">adhésion</a> 5€/an (+ de 8 ans, valable un an de date à date).
+                            <span class="format-note">L'adhésion permet d'avoir 10% de réduction dans plusieurs boutiques de jeu partenaires.</span>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="format-card format-sunday" aria-label="Dimanche après-midi jeu">
+                    <h2 class="format-title">☀️ Dimanche après-midi jeu</h2>
+                    <ul class="format-list">
+                        <li>
+                            📅 <strong>Dates :</strong> Certains dimanches après-midi (voir l'agenda ci-dessous)
+                        </li>
+                        <li>
+                            ⏰ <strong>Horaires :</strong> 14h - 17h
+                        </li>
+                        <li>
+                            📍 <strong>Lieu :</strong> <a href="https://www.google.com/maps/search/2+Hameau+de+la+Clairi%C3%A8re,+33440+AMBARES?entry=gmail&source=g" target="_blank" rel="noopener noreferrer">Salle du Hameau de Marsillon, 2 Hameau de la Clairière, 33440 Ambarès-et-Lagrave</a>
+                        </li>
+                        <li>
+                            🎲 <strong>Ambiance :</strong> Idéal pour jouer en journée sur un créneau dédié de 3 heures, seul, entre amis ou en famille.
+                        </li>
+                    </ul>
+                </section>
+            </div>
+
             <div class="specs-grid">
-                <div class="spec-item bg-coral">
-                    📅 <strong>Dates :</strong> Mardis des semaines impaires + 1er vendredi du mois + certains après-midi en week-end (<a href="https://calendar.google.com/calendar/u/0?cid=bGUxMmVtZWpldUBnbWFpbC5jb20" class="" target="_blank">📅 Ajouter à mon agenda</a>)<br/>
-                    ⏰ <strong>Horaires :</strong> Dès 19h00 (Conseil : il est préférable d'arriver à l'heure, car il peut être plus délicat d'intégrer des parties déjà bien entamées.).
-                </div>
                 <div class="spec-item bg-mint">
-                    🎲 <strong>Jeux proposés :</strong> Viens jouer, avec ou sans jeu ! Chacun amène ce qu'il veut faire découvrir.<br/><a href="https://www.myludo.fr/#!/profil/claude-69807/friends" class="" target="_blank">consulter les ludothèques perso des adhérents</a>.
-                </div>
-                <div class="spec-item bg-blue">
-                    📍 <strong>Lieu :</strong> <a href="https://maps.app.goo.gl/qfcKpgMzVD4qNe9i6" target="_blank">Vieille Halle, 58 rue Edmond Faulat, 33440 Ambarès-et-Lagrave</a> (à côté de l'église).
-                </div>
-                <div class="spec-item bg-amber">
-                    💶 <strong>Tarifs :</strong> Gratuit la 1ère séance ! Puis <a href="https://www.helloasso.com/associations/le-douzieme-jeu"  target="_blank">adhésion</a> 5€/an (+ de 8 ans, valable un an de date à date).<br/> L'adhésion permet d'avoir 10% de réduction dans plusieurs boutiques de jeu partenaires.
+                    🎲 <strong>Jeux proposés :</strong> Viens jouer, avec ou sans jeu ! Chacun amène ce qu'il veut faire découvrir.<br/><a href="https://www.myludo.fr/#!/profil/claude-69807/friends" target="_blank" rel="noopener noreferrer">consulter les ludothèques perso des adhérents</a>.
                 </div>
                 <div class="spec-item bg-purple">
-                    👶 <strong>Age :</strong> Déconseillé aux - de 9 ans du fait de l'heure tardive. Moins de 12 ans obligatoirement accompagnés.
+                    👶 <strong>Age :</strong> Déconseillé aux - de 9 ans en soirée du fait de l'heure tardive. Moins de 12 ans obligatoirement accompagnés.
+                </div>
+                <div class="spec-item bg-amber">
+                    💶 <strong>Adhésion &amp; bons plans :</strong> Gratuit la 1ère séance ! Puis <a href="https://www.helloasso.com/associations/le-douzieme-jeu" target="_blank" rel="noopener noreferrer">adhésion</a> 5€/an (+ de 8 ans, valable un an de date à date) + 10% dans plusieurs boutiques partenaires.
                 </div>
                 <div class="spec-item bg-rose">
-                    📞 <strong>Contact & Infos :</strong> 06 79 10 50 45 ou via notre <a href="https://www.facebook.com/p/Le-12e-jeu-61589676959777/" class="" target="_blank">Page Facebook</a>.
+                    📞 <strong>Contact &amp; Infos :</strong> 06 79 10 50 45 ou via notre <a href="https://www.facebook.com/p/Le-12e-jeu-61589676959777/" target="_blank" rel="noopener noreferrer">Page Facebook</a>.
                 </div>
             </div>
+
             <div class="links-bar">
-                <a href="https://www.helloasso.com/associations/le-douzieme-jeu" class="btn btn-helloasso" target="_blank">🎟️ Adhérer sur HelloAsso</a>
-                <a href="https://www.facebook.com/p/Le-12e-jeu-61589676959777/" class="btn btn-facebook" target="_blank">👥 Page Facebook</a>
+                <a href="https://www.helloasso.com/associations/le-douzieme-jeu" class="btn btn-helloasso" target="_blank" rel="noopener noreferrer">🎟️ Adhérer sur HelloAsso</a>
+                <a href="https://www.facebook.com/p/Le-12e-jeu-61589676959777/" class="btn btn-facebook" target="_blank" rel="noopener noreferrer">👥 Page Facebook</a>
             </div>
 
             <div class="calendar-box">
@@ -574,7 +716,11 @@
                         <a href="https://calendar.google.com/calendar/ical/le12emejeu%40gmail.com/public/basic.ics" class="btn btn-agenda" target="_blank" rel="noopener noreferrer">📅 Ajouter à mon agenda (ICS)</a>
                     </div>
                 </div>
-                <p style="font-size: 0.9rem; margin-top: 0; color: #64748b;">Pensez à vérifier l'agenda pour confirmer les dates et horaires ! Cliquez sur une date pour voir les détails.</p>
+                <p style="font-size: 0.9rem; margin-top: 0; margin-bottom: 10px; color: #64748b;">Pensez à vérifier l'agenda pour confirmer les dates et horaires ! Cliquez sur une date pour voir les détails.</p>
+                <div class="calendar-legend" aria-label="Légende du calendrier">
+                    <span class="legend-item"><span class="legend-dot evening"></span>Soirées jeux (dès 19h)</span>
+                    <span class="legend-item"><span class="legend-dot sunday"></span>Dimanche jeu (14h–17h)</span>
+                </div>
                 <div class="calendar-wrapper">
                     <div id="fullcalendar-agenda">Chargement du calendrier...</div>
                 </div>
@@ -605,6 +751,8 @@
 
     <script>
         (function () {
+            const LIEU_DIMANCHE = "Salle du Hameau de Marsillon, 2 Hameau de la Clairière, 33440 Ambarès-et-Lagrave";
+
             function initAgenda() {
                 const calendarEl = document.getElementById("fullcalendar-agenda");
                 if (!calendarEl) return;
@@ -675,6 +823,12 @@
                         return `${yyyy}-${mm}-${dd}`;
                     }
 
+                    function estDimancheApresMidi(dateObj, summaryText) {
+                        if (dateObj && dateObj.getDay() === 0) return true;
+                        const s = (summaryText || "").toLowerCase();
+                        return s.includes("dimanche") || s.includes("après-midi") || s.includes("apres-midi") || s.includes("marsillon");
+                    }
+
                     function estEvenementMisEnAvant(debut) {
                         if (!debut) return false;
                         return debut.getMonth() === 11 && debut.getDate() === 1 && debut.getHours() === 19;
@@ -683,10 +837,14 @@
                     function ouvrirModaleEvenement(event) {
                         if (!modalBackdrop) return;
                         const start = event.start;
+                        const isSunday = Boolean(event.extendedProps && event.extendedProps.isSunday);
                         const isHighlight = estEvenementMisEnAvant(start);
 
-                        if (modalHeader) modalHeader.classList.toggle("highlight", isHighlight);
-                        if (modalTitle) modalTitle.textContent = event.title || "Soirée jeux";
+                        if (modalHeader) {
+                            modalHeader.classList.toggle("highlight", isHighlight);
+                            modalHeader.classList.toggle("sunday", !isHighlight && isSunday);
+                        }
+                        if (modalTitle) modalTitle.textContent = event.title || (isSunday ? "Dimanche jeu" : "Soirée jeux");
 
                         if (start && modalDatetime) {
                             const dateStr = start.toLocaleDateString("fr-FR", {
@@ -699,12 +857,17 @@
 
                             if (event.allDay) {
                                 modalDatetime.innerHTML = `📅 <strong>Date :</strong> ${dateCapitalized} (Journée)`;
+                            } else if (isSunday) {
+                                modalDatetime.innerHTML = `📅 <strong>Date :</strong> ${dateCapitalized}<br>⏰ <strong>Horaire :</strong> 14h - 17h`;
                             } else {
-                                modalDatetime.innerHTML = `📅 <strong>Date :</strong> ${dateCapitalized}<br>⏰ <strong>Horaire :</strong> 19:00`;
+                                modalDatetime.innerHTML = `📅 <strong>Date :</strong> ${dateCapitalized}<br>⏰ <strong>Horaire :</strong> Dès 19h00`;
                             }
                         }
 
-                        const lieu = event.extendedProps && event.extendedProps.location;
+                        const lieu = isSunday
+                            ? LIEU_DIMANCHE
+                            : (event.extendedProps && event.extendedProps.location);
+
                         if (modalLocation) {
                             if (lieu) {
                                 modalLocation.style.display = "block";
@@ -720,7 +883,7 @@
                         modalBackdrop.classList.add("open");
                     }
 
-                    function icalTimeVersChaine19h(icalTime, isAllDay) {
+                    function icalTimeVersChaineSelonType(icalTime, isAllDay, isSunday) {
                         if (!icalTime) return null;
                         const yyyy = String(icalTime.year).padStart(4, "0");
                         const mm = String(icalTime.month).padStart(2, "0");
@@ -728,7 +891,7 @@
                         if (isAllDay) {
                             return `${yyyy}-${mm}-${dd}`;
                         }
-                        return `${yyyy}-${mm}-${dd}T19:00:00`;
+                        return isSunday ? `${yyyy}-${mm}-${dd}T14:00:00` : `${yyyy}-${mm}-${dd}T19:00:00`;
                     }
 
                     function comparerJourIcalAvecDate(icalTime, jsDate) {
@@ -793,21 +956,27 @@
                                                     guard++;
                                                     if (comparerJourIcalAvecDate(next, fetchInfo.end) > 0) break;
                                                     if (comparerJourIcalAvecDate(next, fetchInfo.start) >= 0) {
+                                                        const jsDate = new Date(next.year, next.month - 1, next.day);
+                                                        const isSunday = estDimancheApresMidi(jsDate, summary);
                                                         parsedEvents.push({
                                                             title: summary,
-                                                            start: icalTimeVersChaine19h(next, isAllDay),
+                                                            start: icalTimeVersChaineSelonType(next, isAllDay, isSunday),
                                                             allDay: isAllDay,
-                                                            extendedProps: { location, description }
+                                                            classNames: isSunday ? ["fc-event-sunday"] : [],
+                                                            extendedProps: { location, description, isSunday }
                                                         });
                                                     }
                                                 }
                                             } else if (event.startDate) {
                                                 if (comparerJourIcalAvecDate(event.startDate, fetchInfo.end) <= 0) {
+                                                    const jsDate = new Date(event.startDate.year, event.startDate.month - 1, event.startDate.day);
+                                                    const isSunday = estDimancheApresMidi(jsDate, summary);
                                                     parsedEvents.push({
                                                         title: summary,
-                                                        start: icalTimeVersChaine19h(event.startDate, isAllDay),
+                                                        start: icalTimeVersChaineSelonType(event.startDate, isAllDay, isSunday),
                                                         allDay: isAllDay,
-                                                        extendedProps: { location, description }
+                                                        classNames: isSunday ? ["fc-event-sunday"] : [],
+                                                        extendedProps: { location, description, isSunday }
                                                     });
                                                 }
                                             }
@@ -832,6 +1001,10 @@
                         eventDidMount: function (info) {
                             if (info.event.allDay) {
                                 info.el.classList.add("fc-event-allday");
+                            }
+
+                            if (info.event.extendedProps && info.event.extendedProps.isSunday) {
+                                info.el.classList.add("fc-event-sunday");
                             }
 
                             if (info.event.start && estEvenementMisEnAvant(info.event.start)) {
